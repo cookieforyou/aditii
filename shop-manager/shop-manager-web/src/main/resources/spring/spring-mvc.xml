@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--1 扫描WEB层下注解类,可以扫描到base-package的当前包以及子包的所有注解类-->
-    <context:component-scan base-package="aditii.web"/>
+    <context:component-scan base-package="com.benz.aditii.web"/>
 
     <!--开启注解驱动：@RequestMapping @ResponseBody jackson转换成JSON-->
     <mvc:annotation-driven>
