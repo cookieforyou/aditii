@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.benz.aditii.dao.CommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.benz.aditii.pojo.po.Commodity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="goodsname" property="goodsname" jdbcType="VARCHAR" />
+    <result column="goodsprice" property="goodsprice" jdbcType="BIGINT" />
+    <result column="stocknum" property="stocknum" jdbcType="INTEGER" />
+    <result column="goodskind" property="goodskind" jdbcType="VARCHAR" />
+    <result column="discountprice" property="discountprice" jdbcType="BIGINT" />
+    <result column="sales" property="sales" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="goodsdesc" property="goodsdesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.benz.aditii.pojo.po.CommodityWithBLOBs" extends="BaseResultMap" >
+    <result column="goodscolor" property="goodscolor" jdbcType="LONGVARCHAR" />
+    <result column="image" property="image" jdbcType="LONGVARCHAR" />
+    <result column="size" property="size" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, goodsname, goodsprice, stocknum, goodskind, discountprice, sales, pid, goodsdesc
+  </sql>
+  <sql id="Blob_Column_List" >
+    goodscolor, image, size
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.benz.aditii.pojo.po.CommodityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.benz.aditii.pojo.po.CommodityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from commodity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from commodity
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.benz.aditii.pojo.po.CommodityExample" >
+    delete from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.benz.aditii.pojo.po.CommodityWithBLOBs" >
+    insert into commodity (id, goodsname, goodsprice, 
+      stocknum, goodskind, discountprice, 
+      sales, pid, goodsdesc, 
+      goodscolor, image, size
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsname,jdbcType=VARCHAR}, #{goodsprice,jdbcType=BIGINT}, 
+      #{stocknum,jdbcType=INTEGER}, #{goodskind,jdbcType=VARCHAR}, #{discountprice,jdbcType=BIGINT}, 
+      #{sales,jdbcType=INTEGER}, #{pid,jdbcType=BIGINT}, #{goodsdesc,jdbcType=VARCHAR}, 
+      #{goodscolor,jdbcType=LONGVARCHAR}, #{image,jdbcType=LONGVARCHAR}, #{size,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.benz.aditii.pojo.po.CommodityWithBLOBs" >
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsname != null" >
+        goodsname,
+      </if>
+      <if test="goodsprice != null" >
+        goodsprice,
+      </if>
+      <if test="stocknum != null" >
+        stocknum,
+      </if>
+      <if test="goodskind != null" >
+        goodskind,
+      </if>
+      <if test="discountprice != null" >
+        discountprice,
+      </if>
+      <if test="sales != null" >
+        sales,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="goodsdesc != null" >
+        goodsdesc,
+      </if>
+      <if test="goodscolor != null" >
+        goodscolor,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null" >
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsprice != null" >
+        #{goodsprice,jdbcType=BIGINT},
+      </if>
+      <if test="stocknum != null" >
+        #{stocknum,jdbcType=INTEGER},
+      </if>
+      <if test="goodskind != null" >
+        #{goodskind,jdbcType=VARCHAR},
+      </if>
+      <if test="discountprice != null" >
+        #{discountprice,jdbcType=BIGINT},
+      </if>
+      <if test="sales != null" >
+        #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="goodsdesc != null" >
+        #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodscolor != null" >
+        #{goodscolor,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.benz.aditii.pojo.po.CommodityExample" resultType="java.lang.Integer" >
+    select count(*) from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update commodity
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null" >
+        goodsname = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsprice != null" >
+        goodsprice = #{record.goodsprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.stocknum != null" >
+        stocknum = #{record.stocknum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodskind != null" >
+        goodskind = #{record.goodskind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discountprice != null" >
+        discountprice = #{record.discountprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.sales != null" >
+        sales = #{record.sales,jdbcType=INTEGER},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsdesc != null" >
+        goodsdesc = #{record.goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodscolor != null" >
+        goodscolor = #{record.goodscolor,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.size != null" >
+        size = #{record.size,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update commodity
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsname = #{record.goodsname,jdbcType=VARCHAR},
+      goodsprice = #{record.goodsprice,jdbcType=BIGINT},
+      stocknum = #{record.stocknum,jdbcType=INTEGER},
+      goodskind = #{record.goodskind,jdbcType=VARCHAR},
+      discountprice = #{record.discountprice,jdbcType=BIGINT},
+      sales = #{record.sales,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=BIGINT},
+      goodsdesc = #{record.goodsdesc,jdbcType=VARCHAR},
+      goodscolor = #{record.goodscolor,jdbcType=LONGVARCHAR},
+      image = #{record.image,jdbcType=LONGVARCHAR},
+      size = #{record.size,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update commodity
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsname = #{record.goodsname,jdbcType=VARCHAR},
+      goodsprice = #{record.goodsprice,jdbcType=BIGINT},
+      stocknum = #{record.stocknum,jdbcType=INTEGER},
+      goodskind = #{record.goodskind,jdbcType=VARCHAR},
+      discountprice = #{record.discountprice,jdbcType=BIGINT},
+      sales = #{record.sales,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=BIGINT},
+      goodsdesc = #{record.goodsdesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.benz.aditii.pojo.po.CommodityWithBLOBs" >
+    update commodity
+    <set >
+      <if test="goodsname != null" >
+        goodsname = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsprice != null" >
+        goodsprice = #{goodsprice,jdbcType=BIGINT},
+      </if>
+      <if test="stocknum != null" >
+        stocknum = #{stocknum,jdbcType=INTEGER},
+      </if>
+      <if test="goodskind != null" >
+        goodskind = #{goodskind,jdbcType=VARCHAR},
+      </if>
+      <if test="discountprice != null" >
+        discountprice = #{discountprice,jdbcType=BIGINT},
+      </if>
+      <if test="sales != null" >
+        sales = #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="goodsdesc != null" >
+        goodsdesc = #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodscolor != null" >
+        goodscolor = #{goodscolor,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.benz.aditii.pojo.po.CommodityWithBLOBs" >
+    update commodity
+    set goodsname = #{goodsname,jdbcType=VARCHAR},
+      goodsprice = #{goodsprice,jdbcType=BIGINT},
+      stocknum = #{stocknum,jdbcType=INTEGER},
+      goodskind = #{goodskind,jdbcType=VARCHAR},
+      discountprice = #{discountprice,jdbcType=BIGINT},
+      sales = #{sales,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=BIGINT},
+      goodsdesc = #{goodsdesc,jdbcType=VARCHAR},
+      goodscolor = #{goodscolor,jdbcType=LONGVARCHAR},
+      image = #{image,jdbcType=LONGVARCHAR},
+      size = #{size,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.benz.aditii.pojo.po.Commodity" >
+    update commodity
+    set goodsname = #{goodsname,jdbcType=VARCHAR},
+      goodsprice = #{goodsprice,jdbcType=BIGINT},
+      stocknum = #{stocknum,jdbcType=INTEGER},
+      goodskind = #{goodskind,jdbcType=VARCHAR},
+      discountprice = #{discountprice,jdbcType=BIGINT},
+      sales = #{sales,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=BIGINT},
+      goodsdesc = #{goodsdesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
