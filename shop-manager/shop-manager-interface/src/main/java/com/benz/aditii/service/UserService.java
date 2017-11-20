@@ -1,12 +1,12 @@
 package com.benz.aditii.service;
 
-import com.benz.aditii.pojo.po.User;
+import com.benz.aditii.pojo.po.TbUser;
 
 public interface UserService {
 
-    User checkUserLogin(User user);
+    TbUser checkUserLogin(TbUser user);
 
-    int save(User user);
+    int save(TbUser user);
 
-    User findUserByName(User user);
+    TbUser findUserByName(TbUser user);
 }

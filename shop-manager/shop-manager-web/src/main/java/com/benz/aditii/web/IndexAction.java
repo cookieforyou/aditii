@@ -10,7 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexAction {
 
     @RequestMapping("/")
+    public String goLogin() {
+        return "login";
+    }
+
+    @RequestMapping("/goIndex")
     public String goIndex() {
         return "index";
+    }
+
+    @RequestMapping("/goRegister")
+    public String goRegister() {
+        return "register";
     }
 }

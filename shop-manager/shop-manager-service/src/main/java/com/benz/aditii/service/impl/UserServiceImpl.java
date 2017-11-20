@@ -1,9 +1,9 @@
 package com.benz.aditii.service.impl;
 
 import com.benz.aditii.common.util.IDUtils;
-import com.benz.aditii.dao.UserMapper;
-import com.benz.aditii.pojo.po.User;
-import com.benz.aditii.pojo.po.UserExample;
+import com.benz.aditii.dao.TbUserMapper;
+import com.benz.aditii.pojo.po.TbUser;
+import com.benz.aditii.pojo.po.TbUserExample;
 import com.benz.aditii.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,19 +17,19 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserMapper userDao;
+    private TbUserMapper userDao;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public User checkUserLogin(User user) {
-        User findUser = null;
+    public TbUser checkUserLogin(TbUser user) {
+        TbUser findUser = null;
         try {
-            UserExample userExample = new UserExample();
-            UserExample.Criteria criteria = userExample.createCriteria();
+            TbUserExample userExample = new TbUserExample();
+            TbUserExample.Criteria criteria = userExample.createCriteria();
             criteria.andUsernameEqualTo(user.getUsername());
             criteria.andPasswordEqualTo(user.getPassword());
-            List<User> users = userDao.selectByExample(userExample);
+            List<TbUser> users = userDao.selectByExample(userExample);
             if (users != null && users.size() > 0) {
                 findUser = users.get(0);
             }
@@ -41,13 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByName(User user) {
-        User findUser = null;
+    public TbUser findUserByName(TbUser user) {
+        TbUser findUser = null;
         try {
-            UserExample userExample = new UserExample();
-            UserExample.Criteria criteria = userExample.createCriteria();
+            TbUserExample userExample = new TbUserExample();
+            TbUserExample.Criteria criteria = userExample.createCriteria();
             criteria.andUsernameEqualTo(user.getUsername());
-            List<User> users = userDao.selectByExample(userExample);
+            List<TbUser> users = userDao.selectByExample(userExample);
             if (users != null && users.size() > 0) {
                 findUser = users.get(0);
             }
@@ -59,13 +59,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int save(User user) {
+    public int save(TbUser user) {
         int saveCount = 0;
         try {
             user.setId(IDUtils.getItemId());
             user.setCreated(new Date());
             user.setUpdated(new Date());
-            user.setStatus((byte) 0);
             saveCount = userDao.insert(user);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
